@@ -1,0 +1,133 @@
+const Btn = (props) => 
+        <button style={{width: '60px'}} onClick={props.handleClick} value={props.text}>{props.text}</button>;
+const Title = () => 
+        <center><h1>Calculator</h1></center>;
+const Attribution = () => 
+        <center><h5>Made by rjbx with React and MathJS</h5></center>;
+const Display = (props) => 
+        <table style={{margin: 'auto'}}>
+           <input style={{width: '235px'}} value={props.exp} onChange={props.handleChange}/>
+        </table>
+const Keypad = (props) => 
+        <table style={{margin: 'auto'}}>
+          <tbody>
+            <tr>
+              <Btn handleClick={props.handleClick} text='del'/>
+              <Btn handleClick={props.handleClick} text='('/>
+              <Btn handleClick={props.handleClick} text=')'/>
+              <Btn handleClick={props.handleClick} text='='/>
+            </tr>
+            <tr>
+              <Btn handleClick={props.handleClick} text='9'/>
+              <Btn handleClick={props.handleClick} text='8'/>
+              <Btn handleClick={props.handleClick} text='7'/>
+              <Btn handleClick={props.handleClick} text='+'/>
+            </tr> 
+            <tr>
+              <Btn handleClick={props.handleClick} text='6'/>
+              <Btn handleClick={props.handleClick} text='5'/>
+              <Btn handleClick={props.handleClick} text='4'/>
+              <Btn handleClick={props.handleClick} text='–'/>
+            </tr>
+            <tr>
+              <Btn handleClick={props.handleClick} text='3'/>
+              <Btn handleClick={props.handleClick} text='2'/>
+              <Btn handleClick={props.handleClick} text='1'/>
+              <Btn handleClick={props.handleClick} text='*'/>
+            </tr>
+            <tr>
+              <Btn handleClick={props.handleClick} text='0'/>
+              <Btn handleClick={props.handleClick} text='.'/>
+              <Btn handleClick={props.handleClick} text='^'/>
+              <Btn handleClick={props.handleClick} text='/'/>
+            </tr>
+            <tr>
+              <Btn handleClick={props.handleClick} text='log'/>
+              <Btn handleClick={props.handleClick} text='ln'/>
+              <Btn handleClick={props.handleClick} text='e^x'/>
+              <Btn handleClick={props.handleClick} text='sqrt'/>
+            </tr>
+            <tr>
+              <Btn handleClick={props.handleClick} text='sin'/>
+              <Btn handleClick={props.handleClick} text='cos'/>
+              <Btn handleClick={props.handleClick} text='tan'/>
+              <Btn handleClick={props.handleClick} text='pi'/>
+            </tr>
+            <tr>
+              <Btn handleClick={props.handleClick} text='arcsin'/>
+              <Btn handleClick={props.handleClick} text='arccos'/>
+              <Btn handleClick={props.handleClick} text='arctan'/>
+              <Btn handleClick={props.handleClick} text='deg/rad'/>
+            </tr>
+          </tbody>
+        </table>;
+
+class Header extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (<header><Title /></header>);
+  }
+}
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+  } 
+  render() {
+    return (
+      <main>
+        <Display exp={this.props.exp} handleChange={this.props.handleChange}/>
+        <Keypad handleClick={this.props.handleClick}/>
+      </main>
+    );
+  }
+}
+class Footer extends React.Component {
+  constructor(props) {
+    super(props);
+  } 
+  render() {
+    return (<footer><Attribution /></footer>);
+  }
+}
+
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      exp: '0'
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick(event) {
+    let value = this.state.exp + event.target.value;
+    this.handleInput(value);
+    console.log(value);
+  }
+  handleChange(event) {
+    this.handleInput(event.target.value);
+  }
+  handleInput(value) {
+    this.setState({
+      exp: value
+    });
+  }
+  // handleEval() {
+  //   this.setState({
+  //     // exp: { Math.eval({this.state.exp}) }
+  //   });
+  // }
+  render() {
+    return (
+      <body>
+        <Header />
+        <Main exp={this.state.exp} handleChange={this.handleChange} handleClick={this.handleClick}/>
+        <Footer />
+      </body>
+    );
+  }
+};
+
+ReactDOM.render(<Calculator />, document.getElementById('react'));
