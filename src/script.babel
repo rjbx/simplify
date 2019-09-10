@@ -5,8 +5,8 @@ const Title = () =>
 const Attribution = () => 
         <center><h5>Made by rjbx with React and MathJS</h5></center>;
 const Display = (props) => 
-        <table style={{margin: 'auto'}}>
-           <input style={{width: '235px'}} value={props.exp} onChange={props.handleChange}/>
+        <table style={{margin: 'auto'}} onClick={props.handleClick}>
+           <input style={{width: '235px'}} value={props.expr} placeholder={props.temp} onChange={props.handleChange} onClick={props.handleClick}/>
         </table>
 const Keypad = (props) => 
         <table style={{margin: 'auto'}}>
@@ -77,7 +77,7 @@ class Main extends React.Component {
   render() {
     return (
       <main>
-        <Display exp={this.props.exp} handleChange={this.props.handleChange}/>
+        <Display expr={this.props.expr} temp={this.props.temp} handleChange={this.props.handleChange}/>
         <Keypad handleClick={this.props.handleClick}/>
       </main>
     );
@@ -96,38 +96,42 @@ class Calculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      exp: '0'
+      expr: '',
+      temp: '0'
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(event) {
-    let value = this.state.exp + event.target.value;
-    this.handleInput(value);
-    console.log(value);
+    let value = event.target.value;
+    console.log(event.target);
+    if (value != '=') this.handleInput(this.state.expr + value);
+    else this.handleEval();
   }
   handleChange(event) {
     this.handleInput(event.target.value);
   }
   handleInput(value) {
     this.setState({
-      exp: value
+      expr: value
     });
   }
-  // handleEval() {
-  //   this.setState({
-  //     // exp: { Math.eval({this.state.exp}) }
-  //   });
-  // }
+  handleEval() {
+    let result = math.evaluate(this.state.expr);
+    this.setState({
+      expr: '',
+      temp: result
+    });
+  }
   render() {
     return (
       <body>
         <Header />
-        <Main exp={this.state.exp} handleChange={this.handleChange} handleClick={this.handleClick}/>
+        <Main expr={this.state.expr} temp={this.state.temp} handleChange={this.handleChange} handleClick={this.handleClick}/>
         <Footer />
       </body>
     );
   }
 };
 
-ReactDOM.render(<Calculator />, document.getElementById('react'));
+ReactDOM.render(<Calculator />, document.getElementById('react')); mnz

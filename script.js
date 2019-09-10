@@ -5,8 +5,8 @@ React.createElement("center", null, React.createElement("h1", null, "Calculator"
 const Attribution = () =>
 React.createElement("center", null, React.createElement("h5", null, "Made by rjbx with React and MathJS"));
 const Display = (props) =>
-React.createElement("table", { style: { margin: 'auto' } },
-React.createElement("input", { style: { width: '235px' }, value: props.exp, onChange: props.handleChange }));
+React.createElement("table", { style: { margin: 'auto' }, onClick: props.handleClick },
+React.createElement("input", { style: { width: '235px' }, value: props.expr, placeholder: props.temp, onChange: props.handleChange, onClick: props.handleClick }));
 
 const Keypad = (props) =>
 React.createElement("table", { style: { margin: 'auto' } },
@@ -77,7 +77,7 @@ class Main extends React.Component {
   render() {
     return (
       React.createElement("main", null,
-      React.createElement(Display, { exp: this.props.exp, handleChange: this.props.handleChange }),
+      React.createElement(Display, { expr: this.props.expr, temp: this.props.temp, handleChange: this.props.handleChange }),
       React.createElement(Keypad, { handleClick: this.props.handleClick })));
 
 
@@ -96,38 +96,42 @@ class Calculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      exp: '0' };
+      expr: '',
+      temp: '0' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(event) {
-    let value = this.state.exp + event.target.value;
-    this.handleInput(value);
-    console.log(value);
+    let value = event.target.value;
+    console.log(event.target);
+    if (value != '=') this.handleInput(this.state.expr + value);else
+    this.handleEval();
   }
   handleChange(event) {
     this.handleInput(event.target.value);
   }
   handleInput(value) {
     this.setState({
-      exp: value });
+      expr: value });
 
   }
-  // handleEval() {
-  //   this.setState({
-  //     // exp: { Math.eval({this.state.exp}) }
-  //   });
-  // }
+  handleEval() {
+    let result = math.evaluate(this.state.expr);
+    this.setState({
+      expr: '',
+      temp: result });
+
+  }
   render() {
     return (
       React.createElement("body", null,
       React.createElement(Header, null),
-      React.createElement(Main, { exp: this.state.exp, handleChange: this.handleChange, handleClick: this.handleClick }),
+      React.createElement(Main, { expr: this.state.expr, temp: this.state.temp, handleChange: this.handleChange, handleClick: this.handleClick }),
       React.createElement(Footer, null)));
 
 
   }}
 ;
 
-ReactDOM.render(React.createElement(Calculator, null), document.getElementById('react'));
+ReactDOM.render(React.createElement(Calculator, null), document.getElementById('react'));mnz;
