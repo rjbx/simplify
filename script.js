@@ -44,7 +44,7 @@ React.createElement(Btn, { handleClick: props.handleClick, text: "/" })),
 React.createElement("tr", null,
 React.createElement(Btn, { handleClick: props.handleClick, text: "log" }),
 React.createElement(Btn, { handleClick: props.handleClick, text: "ln" }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "e^x" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "e^" }),
 React.createElement(Btn, { handleClick: props.handleClick, text: "sqrt" })),
 
 React.createElement("tr", null,
@@ -57,8 +57,14 @@ React.createElement("tr", null,
 React.createElement(Btn, { handleClick: props.handleClick, text: "arcsin" }),
 React.createElement(Btn, { handleClick: props.handleClick, text: "arccos" }),
 React.createElement(Btn, { handleClick: props.handleClick, text: "arctan" }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "deg/rad" }))));
+React.createElement(Btn, { handleClick: props.handleClick, text: "deg" }))));
 
+
+
+/* 'solar panel' switch for activation in dark mode */
+const Panel = () =>
+React.createElement("table", { style: { margin: 'auto', border: '1px solid grey', width: '240px', height: '20px' } },
+React.createElement("tr", null));
 
 
 
@@ -77,6 +83,7 @@ class Main extends React.Component {
   render() {
     return (
       React.createElement("main", null,
+      React.createElement(Panel, null),
       React.createElement(Display, { expr: this.props.expr, temp: this.props.temp, handleChange: this.props.handleChange }),
       React.createElement(Keypad, { handleClick: this.props.handleClick })));
 
@@ -104,9 +111,12 @@ class Calculator extends React.Component {
   }
   handleClick(event) {
     let value = event.target.value;
-    console.log(event.target);
-    if (value != '=') this.handleInput(this.state.expr + value);else
-    this.handleEval();
+    console.log(event.target.value);
+    switch (value) {
+      case '=':this.handleEval();break;
+      case 'del':this.handleInput(this.state.expr.slice(0, -1));break;
+      default:this.handleInput(this.state.expr + value);}
+
   }
   handleChange(event) {
     this.handleInput(event.target.value);
@@ -120,7 +130,8 @@ class Calculator extends React.Component {
     let result = math.evaluate(this.state.expr);
     this.setState({
       expr: '',
-      temp: result });
+      temp: result,
+      dark: false });
 
   }
   render() {
@@ -134,4 +145,4 @@ class Calculator extends React.Component {
   }}
 ;
 
-ReactDOM.render(React.createElement(Calculator, null), document.getElementById('react'));mnz;
+ReactDOM.render(React.createElement(Calculator, null), document.getElementById('react'));

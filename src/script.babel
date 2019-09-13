@@ -44,7 +44,7 @@ const Keypad = (props) =>
             <tr>
               <Btn handleClick={props.handleClick} text='log'/>
               <Btn handleClick={props.handleClick} text='ln'/>
-              <Btn handleClick={props.handleClick} text='e^x'/>
+              <Btn handleClick={props.handleClick} text='e^'/>
               <Btn handleClick={props.handleClick} text='sqrt'/>
             </tr>
             <tr>
@@ -57,10 +57,16 @@ const Keypad = (props) =>
               <Btn handleClick={props.handleClick} text='arcsin'/>
               <Btn handleClick={props.handleClick} text='arccos'/>
               <Btn handleClick={props.handleClick} text='arctan'/>
-              <Btn handleClick={props.handleClick} text='deg/rad'/>
+              <Btn handleClick={props.handleClick} text='deg'/>
             </tr>
           </tbody>
         </table>;
+/* 'solar panel' switch for activation in dark mode */
+const Panel = () =>
+          <table style={{margin:'auto', border:'1px solid grey', width: '240px', height: '20px'}}>
+            <tr>
+            </tr>
+          </table>;
 
 class Header extends React.Component {
   constructor(props) {
@@ -77,6 +83,7 @@ class Main extends React.Component {
   render() {
     return (
       <main>
+        <Panel />
         <Display expr={this.props.expr} temp={this.props.temp} handleChange={this.props.handleChange}/>
         <Keypad handleClick={this.props.handleClick}/>
       </main>
@@ -104,9 +111,12 @@ class Calculator extends React.Component {
   }
   handleClick(event) {
     let value = event.target.value;
-    console.log(event.target);
-    if (value != '=') this.handleInput(this.state.expr + value);
-    else this.handleEval();
+    console.log(event.target.value);
+    switch (value) {
+      case '=': this.handleEval(); break;
+      case 'del': this.handleInput(this.state.expr.slice(0,-1)); break;
+      default: this.handleInput(this.state.expr + value);
+    }
   }
   handleChange(event) {
     this.handleInput(event.target.value);
@@ -120,7 +130,8 @@ class Calculator extends React.Component {
     let result = math.evaluate(this.state.expr);
     this.setState({
       expr: '',
-      temp: result
+      temp: result,
+      dark: false
     });
   }
   render() {
@@ -134,4 +145,4 @@ class Calculator extends React.Component {
   }
 };
 
-ReactDOM.render(<Calculator />, document.getElementById('react')); mnz
+ReactDOM.render(<Calculator />, document.getElementById('react'));
