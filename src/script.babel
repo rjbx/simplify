@@ -1,18 +1,25 @@
 const inputStyle = {width: '235px', height: '30px', backgroundColor: '#449944', fontFamily: 'Quantico', fontSize: '20px', textAlign: 'right'};
 const mainStyle = {margin: 'auto', width: '260px', height: '360px', verticalAlign: 'middle', border: '5px groove #0090F7', borderRadius: '0px 0px 15px 15px', backgroundColor: '#0070D7'};
 const titleStyle = {margin: '10px', fontFamily: 'Quantico', fontWeight: 'bold', fontStyle: 'italic', fontSize: '16px', color: 'white', textShadow: '1px 1px #222'};
+const clearBtnStyle = {width: '165px', height: '24px', backgroundColor: '#0070D7', color: 'white', fontWeight: 'bold', fontSize: '11px', textAlign: 'right'};
 const redBtnStyle = {width: '60px', height: '24px', backgroundColor: '#C73000', color: 'white', fontWeight: 'bold', fontSize: '11px'};
 const blueBtnStyle = {width: '60px', height: '24px', backgroundColor: 'white', color: '#1040A0', fontWeight: 'bold', fontSize: '11px'};
 const Btn = (props) => 
-        <button style={props.style} onClick={props.handleClick} value={props.text}>{props.text}</button>;
-const Title = () => <h3 style={titleStyle}>TG-108</h3>;
+        <button style={props.style} onClick={props.handleClick} value={props.text} id={props.text}>{props.text}</button>;
+const Logo = () => 
+        <h3 style={titleStyle}>TG-108</h3>;
+const Title = () => 
+        <center><h1 style={{fontSize: '24px'}}>simplify</h1></center>;
 const Attribution = () => 
         <center><h5 style={{fontFamily: 'sans', fontSize: '8px'}}>Made by rjbx with React and MathJS</h5></center>;
 const Display = (props) => 
+      <section>
         <table style={{margin: 'auto', paddingTop: '20px'}} onClick={props.handleClick}>
            <input style={inputStyle} value={props.expr} placeholder={props.temp} onChange={props.handleChange} onClick={props.handleClick}/>
-        </table>;
-const Keypad = (props) => 
+        </table>
+      </section>;
+const Keypad = (props) =>
+      <section>
         <table style={{margin: 'auto'}}>
           <tbody>
             <tr>
@@ -64,18 +71,32 @@ const Keypad = (props) =>
               <Btn handleClick={props.handleClick} text='deg' style={redBtnStyle}/>
             </tr>
           </tbody>
-        </table>;
+        </table>
+      </section>;
 const Panel = (props) =>
-        <button value='panel' style={{backgroundColor: '#0070D7', border: '3px inset #0090FF'}} onClick={props.handleClick}>
+      <section>
+        <button value='panel' style={{backgroundColor: '#0070D7', border: '3px inset #0090FF'}}>
           <table style={{margin:'auto', border:'1px solid #952', width: '240px', height: '30px', backgroundColor: '#222'}}>
             <tr>
-              <td style={{border: '1px solid #520'}}></td>
-              <td style={{border: '1px solid #520'}}></td>
-              <td style={{border: '1px solid #520'}}></td>
-              <td style={{border: '1px solid #520'}}></td>
+              <td id='toggle' style={{border: '1px solid #520'}} onClick={props.handleClick}></td>
+              <td id='toggle' style={{border: '1px solid #520'}} onClick={props.handleClick}></td>
+              <td id='toggle' style={{border: '1px solid #520'}} onClick={props.handleClick}></td>
+              <td id='toggle' style={{border: '1px solid #520'}} onClick={props.handleClick}></td>
             </tr>
           </table>
-        </button>;
+        </button>
+      </section>;
+const Plate = (props) => 
+      <section>
+        <table>
+          <tr>
+            <td><Logo /></td>
+            <td>
+              <Btn handleClick={props.handleClick} style={clearBtnStyle} text='AC'/>
+            </td>
+          </tr>
+        </table>
+      </section>;
 
 class Header extends React.Component {
   constructor(props) {
@@ -93,7 +114,7 @@ class Main extends React.Component {
     return (
       <main style={mainStyle}>
         <Display expr={this.props.expr} temp={this.props.temp} handleChange={this.props.handleChange}/>
-        <Header />
+        <Plate handleClick={this.props.handleClick} />
         <Panel handleClick={this.props.handleClick}/>
         <Keypad handleClick={this.props.handleClick}/>
       </main>
@@ -127,13 +148,14 @@ class Calculator extends React.Component {
     this.toggleMode = this.toggleMode(this);
   }
   handleClick(event) {
-    let value = event.target.value;
-    console.log(event.target.value);
-    switch (value) {
-      case 'panel': this.toggleMode(); break;
+    let id = event.target.id;
+    console.log(event.target.id);
+    switch (id) {
+      case 'AC': this.handleInput(''); break;
+      case 'toggle': this.toggleMode(); break;
       case '=': this.handleEval(); break;
       case 'del': this.handleInput(this.state.expr.slice(0,-1)); break;
-      default: this.handleInput(this.state.expr + value);
+      default: this.handleInput(this.state.expr + id);
     }
   }
   handleChange(event) {
@@ -147,8 +169,7 @@ class Calculator extends React.Component {
   handleEval() {
     let result = math.evaluate(this.state.expr);
     this.setState({
-      expr: '',
-      temp: result
+      expr: result
     });
   }
   toggleMode() {
@@ -160,8 +181,9 @@ class Calculator extends React.Component {
   render() {
     return (
       <body>
-        <Main expr={this.state.expr} temp={this.state.temp} handleChange={this.handleChange} handleClick={this.handleClick} />
-        <Footer />
+        <Header mode={this.state.mode}/>
+        <Main expr={this.state.expr} temp={this.state.temp} mode={this.state.mode} handleChange={this.handleChange} handleClick={this.handleClick} />
+        <Footer mode={this.state.mode}/>
       </body>
     );
   }
