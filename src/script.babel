@@ -1,72 +1,81 @@
+const inputStyle = {width: '235px', height: '30px', backgroundColor: '#449944', fontFamily: 'Quantico', fontSize: '20px', textAlign: 'right'};
+const mainStyle = {margin: 'auto', width: '260px', height: '360px', verticalAlign: 'middle', border: '5px groove #0090F7', borderRadius: '0px 0px 15px 15px', backgroundColor: '#0070D7'};
+const titleStyle = {margin: '10px', fontFamily: 'Quantico', fontWeight: 'bold', fontStyle: 'italic', fontSize: '16px', color: 'white', textShadow: '1px 1px #222'};
+const redBtnStyle = {width: '60px', height: '24px', backgroundColor: '#C73000', color: 'white', fontWeight: 'bold', fontSize: '11px'};
+const blueBtnStyle = {width: '60px', height: '24px', backgroundColor: 'white', color: '#1040A0', fontWeight: 'bold', fontSize: '11px'};
 const Btn = (props) => 
-        <button style={{width: '60px'}} onClick={props.handleClick} value={props.text}>{props.text}</button>;
-const Title = () => 
-        <center><h1>Calculator</h1></center>;
+        <button style={props.style} onClick={props.handleClick} value={props.text}>{props.text}</button>;
+const Title = () => <h3 style={titleStyle}>TG-108</h3>;
 const Attribution = () => 
-        <center><h5>Made by rjbx with React and MathJS</h5></center>;
+        <center><h5 style={{fontFamily: 'sans', fontSize: '8px'}}>Made by rjbx with React and MathJS</h5></center>;
 const Display = (props) => 
-        <table style={{margin: 'auto'}} onClick={props.handleClick}>
-           <input style={{width: '235px'}} value={props.expr} placeholder={props.temp} onChange={props.handleChange} onClick={props.handleClick}/>
-        </table>
+        <table style={{margin: 'auto', paddingTop: '20px'}} onClick={props.handleClick}>
+           <input style={inputStyle} value={props.expr} placeholder={props.temp} onChange={props.handleChange} onClick={props.handleClick}/>
+        </table>;
 const Keypad = (props) => 
         <table style={{margin: 'auto'}}>
           <tbody>
             <tr>
-              <Btn handleClick={props.handleClick} text='del'/>
-              <Btn handleClick={props.handleClick} text='('/>
-              <Btn handleClick={props.handleClick} text=')'/>
-              <Btn handleClick={props.handleClick} text='='/>
+              <Btn handleClick={props.handleClick} text='del' style={redBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='(' style={redBtnStyle}/>
+              <Btn handleClick={props.handleClick} text=')' style={redBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='=' style={redBtnStyle}/>
             </tr>
             <tr>
-              <Btn handleClick={props.handleClick} text='9'/>
-              <Btn handleClick={props.handleClick} text='8'/>
-              <Btn handleClick={props.handleClick} text='7'/>
-              <Btn handleClick={props.handleClick} text='+'/>
+              <Btn handleClick={props.handleClick} text='9' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='8' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='7' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='+' style={redBtnStyle}/>
             </tr> 
             <tr>
-              <Btn handleClick={props.handleClick} text='6'/>
-              <Btn handleClick={props.handleClick} text='5'/>
-              <Btn handleClick={props.handleClick} text='4'/>
-              <Btn handleClick={props.handleClick} text='–'/>
+              <Btn handleClick={props.handleClick} text='6' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='5' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='4' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='–' style={redBtnStyle}/>
             </tr>
             <tr>
-              <Btn handleClick={props.handleClick} text='3'/>
-              <Btn handleClick={props.handleClick} text='2'/>
-              <Btn handleClick={props.handleClick} text='1'/>
-              <Btn handleClick={props.handleClick} text='*'/>
+              <Btn handleClick={props.handleClick} text='3' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='2' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='1' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='*' style={redBtnStyle}/>
             </tr>
             <tr>
-              <Btn handleClick={props.handleClick} text='0'/>
-              <Btn handleClick={props.handleClick} text='.'/>
-              <Btn handleClick={props.handleClick} text='^'/>
-              <Btn handleClick={props.handleClick} text='/'/>
+              <Btn handleClick={props.handleClick} text='0' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='.' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='^' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='/' style={redBtnStyle}/>
             </tr>
             <tr>
-              <Btn handleClick={props.handleClick} text='log'/>
-              <Btn handleClick={props.handleClick} text='ln'/>
-              <Btn handleClick={props.handleClick} text='e^'/>
-              <Btn handleClick={props.handleClick} text='sqrt'/>
+              <Btn handleClick={props.handleClick} text='log' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='ln' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='e^' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='sqrt' style={redBtnStyle}/>
             </tr>
             <tr>
-              <Btn handleClick={props.handleClick} text='sin'/>
-              <Btn handleClick={props.handleClick} text='cos'/>
-              <Btn handleClick={props.handleClick} text='tan'/>
-              <Btn handleClick={props.handleClick} text='pi'/>
+              <Btn handleClick={props.handleClick} text='sin' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='cos' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='tan' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='pi' style={redBtnStyle}/>
             </tr>
             <tr>
-              <Btn handleClick={props.handleClick} text='arcsin'/>
-              <Btn handleClick={props.handleClick} text='arccos'/>
-              <Btn handleClick={props.handleClick} text='arctan'/>
-              <Btn handleClick={props.handleClick} text='deg'/>
+              <Btn handleClick={props.handleClick} text='arcsin' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='arccos' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='arctan' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='deg' style={redBtnStyle}/>
             </tr>
           </tbody>
         </table>;
-/* 'solar panel' switch for activation in dark mode */
-const Panel = () =>
-          <table style={{margin:'auto', border:'1px solid grey', width: '240px', height: '20px'}}>
+const Panel = (props) =>
+        <button value='panel' style={{backgroundColor: '#0070D7', border: '3px inset #0090FF'}} onClick={props.handleClick}>
+          <table style={{margin:'auto', border:'1px solid #952', width: '240px', height: '30px', backgroundColor: '#222'}}>
             <tr>
+              <td style={{border: '1px solid #520'}}></td>
+              <td style={{border: '1px solid #520'}}></td>
+              <td style={{border: '1px solid #520'}}></td>
+              <td style={{border: '1px solid #520'}}></td>
             </tr>
-          </table>;
+          </table>
+        </button>;
 
 class Header extends React.Component {
   constructor(props) {
@@ -82,9 +91,10 @@ class Main extends React.Component {
   } 
   render() {
     return (
-      <main>
-        <Panel />
+      <main style={mainStyle}>
         <Display expr={this.props.expr} temp={this.props.temp} handleChange={this.props.handleChange}/>
+        <Header />
+        <Panel handleClick={this.props.handleClick}/>
         <Keypad handleClick={this.props.handleClick}/>
       </main>
     );
@@ -104,15 +114,23 @@ class Calculator extends React.Component {
     super(props);
     this.state = {
       expr: '',
-      temp: '0'
+      temp: '0',
+      mode: false
     };
+    WebFont.load({
+      google: {
+       families: ['Quantico:400,700i']
+      }
+    })
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.toggleMode = this.toggleMode(this);
   }
   handleClick(event) {
     let value = event.target.value;
     console.log(event.target.value);
     switch (value) {
+      case 'panel': this.toggleMode(); break;
       case '=': this.handleEval(); break;
       case 'del': this.handleInput(this.state.expr.slice(0,-1)); break;
       default: this.handleInput(this.state.expr + value);
@@ -130,15 +148,19 @@ class Calculator extends React.Component {
     let result = math.evaluate(this.state.expr);
     this.setState({
       expr: '',
-      temp: result,
-      dark: false
+      temp: result
+    });
+  }
+  toggleMode() {
+    let inverse = !this.state.dark;
+    this.setState({
+      mode: inverse
     });
   }
   render() {
     return (
       <body>
-        <Header />
-        <Main expr={this.state.expr} temp={this.state.temp} handleChange={this.handleChange} handleClick={this.handleClick}/>
+        <Main expr={this.state.expr} temp={this.state.temp} handleChange={this.handleChange} handleClick={this.handleClick} />
         <Footer />
       </body>
     );
