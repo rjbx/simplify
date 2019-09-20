@@ -98,7 +98,7 @@ React.createElement(Btn, { handleClick: props.handleClick, style: clearBtnStyle,
 
 
 const Canvas = () =>
-React.createElement("section", { style: { border: '4px solid #DDD', borderTop: 'none', borderRight: 'none', borderRadius: '10px', marginLeft: '30px' } },
+React.createElement("section", { style: { backgroundColor: '#333', border: '10px solid #BB9955', borderBottom: '25px solid tan' } },
 React.createElement("canvas", { id: "canvas", width: 400, height: 350, style: { backgroundColor: 'white', width: '400px', height: '350px' } }),
 React.createElement("center", null,
 React.createElement("div", { style: { height: '10px' } },
@@ -106,9 +106,9 @@ React.createElement("button", { id: "clear" }, "\u267B"))));
 
 
 
-const Sheet = (props) =>
-React.createElement("section", { style: { border: '4px solid #DDD', borderTop: 'none', borderRight: 'none', borderRadius: '10px', marginLeft: '30px' } },
-React.createElement("div", { style: { backgroundColor: 'white', width: '400px', height: '350px', color: 'black', overflow: 'auto' } }, React.createElement("ul", null,
+const Screen = (props) =>
+React.createElement("section", { style: { border: '10px solid #DDD', borderBottom: '25px solid #DDD', borderRadius: '10px', backgroundColor: '#333' } },
+React.createElement("div", { style: { backgroundColor: '#333', width: '400px', height: '350px', color: '#00AA00', fontFamily: 'Quantico', overflow: 'auto' } }, React.createElement("ul", null,
 props.save.map((v, i) => {
   return React.createElement("li", null, v);
 }))),
@@ -127,18 +127,18 @@ class Header extends React.Component {
     return React.createElement("header", null, React.createElement(Title, null));
   }}
 
-class Ribbon extends React.Component {
+class Terminal extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      React.createElement(Sheet, { save: this.props.save }));
+      React.createElement(Screen, { save: this.props.save }));
 
   }}
 
 
-class Whiteboard extends React.Component {
+class Board extends React.Component {
   constructor(props) {
     super(props);
     this.initCanvas = this.initCanvas.bind(this);
@@ -148,7 +148,11 @@ class Whiteboard extends React.Component {
   }
   initCanvas() {
     let canvas = document.querySelector('canvas');
-    let signaturePad = new SignaturePad(canvas);
+    let signaturePad = new SignaturePad(
+    canvas, {
+      backgroundColor: '#333',
+      penColor: '#fff' });
+
   }
   render() {
     return (
@@ -180,7 +184,7 @@ class Main extends React.Component {
       React.createElement("main", null,
       React.createElement("div", { class: "row" },
       React.createElement("div", { class: "column col-md-4" },
-      React.createElement(Whiteboard, null)),
+      React.createElement(Board, null)),
 
       React.createElement("div", { class: "column col-md-4" },
       React.createElement(Calculator, {
@@ -191,7 +195,7 @@ class Main extends React.Component {
 
 
       React.createElement("div", { class: "column col-md-4" },
-      React.createElement(Ribbon, { expr: this.props.expr, save: this.props.save })))));
+      React.createElement(Terminal, { expr: this.props.expr, save: this.props.save })))));
 
 
 
