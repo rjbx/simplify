@@ -1,17 +1,17 @@
 const inputStyle = {width: '235px', height: '30px', backgroundColor: '#449944', fontFamily: 'Quantico', fontSize: '20px', textAlign: 'right'};
-const mainStyle = {margin: 'auto', width: '260px', height: '360px', verticalAlign: 'middle', border: '5px groove #0090F7', borderRadius: '0px 0px 15px 15px', backgroundColor: '#0070D7'};
-const titleStyle = {margin: '10px', fontFamily: 'Quantico', fontWeight: 'bold', fontStyle: 'italic', fontSize: '16px', color: 'white', textShadow: '1px 1px #222'};
+const calcStyle = {margin: 'auto', paddingTop: '30px', width: '270px', height: '360px', verticalAlign: 'middle', border: '5px groove #0090F7', borderRadius: '0px 0px 15px 15px', backgroundColor: '#0070D7'};
+const logoStyle = {margin: '10px', fontFamily: 'Quantico', fontWeight: 'bold', fontStyle: 'italic', fontSize: '16px', color: 'white', textShadow: '1px 1px #222'};
 const clearBtnStyle = {width: '165px', height: '24px', backgroundColor: '#0070D7', color: 'white', fontWeight: 'bold', fontSize: '11px', textAlign: 'right'};
 const redBtnStyle = {width: '60px', height: '24px', backgroundColor: '#C73000', color: 'white', fontWeight: 'bold', fontSize: '11px'};
 const blueBtnStyle = {width: '60px', height: '24px', backgroundColor: 'white', color: '#1040A0', fontWeight: 'bold', fontSize: '11px'};
 const Btn = (props) => 
         <button style={props.style} onClick={props.handleClick} value={props.text} id={props.text}>{props.text}</button>;
 const Logo = () => 
-        <h3 style={titleStyle}>TG-108</h3>;
+        <h3 style={logoStyle}>TG-108</h3>;
 const Title = () => 
-        <center><h1 style={{fontSize: '24px'}}>simplify</h1></center>;
+        <center><h1><a style={{fontSize: '20px', textDecoration: 'none', color: 'white', fontWeight: 'bold', textShadow: '0px 0px 3px black', fontFamily: 'Quantico'}} href='https://rjbx.github.io/simplify'>simplify</a></h1></center>;
 const Attribution = () => 
-        <center><h5 style={{fontFamily: 'sans', fontSize: '8px'}}>Made by rjbx with React and MathJS</h5></center>;
+        <center><h5 style={{fontFamily: 'sans', fontSize: '8px', color: 'grey'}}>Made by rjbx with React and MathJS</h5></center>;
 const Display = (props) => 
       <section>
         <table style={{margin: 'auto', paddingTop: '20px'}} onClick={props.handleClick}>
@@ -97,7 +97,28 @@ const Plate = (props) =>
           </tr>
         </table>
       </section>;
-
+const Canvas = () => 
+      <section style={{border: '4px solid #DDD', borderTop: 'none', borderRight: 'none', borderRadius: '10px', marginLeft: '30px'}}>
+        <canvas id='canvas' width={400} height={350} style={{backgroundColor: 'white', width: '400px', height: '350px'}}></canvas>
+        <center>
+          <div style={{height: '10px'}}>
+            <button id="clear">♻</button>
+          </div>
+        </center>
+      </section>;
+const Sheet = (props) => 
+      <section style={{border: '4px solid #DDD', borderTop: 'none', borderRight: 'none', borderRadius: '10px', marginLeft: '30px'}}>
+        <div style={{backgroundColor: 'white', width: '400px', height: '350px', color: 'black', overflow: 'auto'}}><ul>{
+            props.save.map((v,i) => {
+              return (<li>{v}</li>);
+            })
+          }</ul></div>
+          <center>
+          <div style={{height: '10px'}}>
+            <button id="clear">♻</button>
+          </div>
+        </center>
+      </section>;
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -106,17 +127,73 @@ class Header extends React.Component {
     return (<header><Title /></header>);
   }
 }
+class Ribbon extends React.Component {
+  constructor(props) {
+    super(props);
+  } 
+  render() {
+    return (
+    <Sheet save={this.props.save}/>
+    );
+  }
+}
+
+class Whiteboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.initCanvas = this.initCanvas.bind(this);
+  }
+  componentDidMount() {
+    this.initCanvas();
+  }
+  initCanvas() { 
+    let canvas = document.querySelector('canvas');
+    let signaturePad = new SignaturePad(canvas);
+  }
+  render() { 
+    return (
+      <Canvas />
+    );
+  }
+}
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <section style={calcStyle}>
+        <Display expr={this.props.expr} temp={this.props.temp} handleChange={this.props.handleChange} />
+        <Plate handleClick={this.props.handleClick} />
+        <Panel handleClick={this.props.handleClick} />
+        <Keypad handleClick={this.props.handleClick} />
+       </section>
+    );
+  }
+}
 class Main extends React.Component {
   constructor(props) {
     super(props);
   } 
   render() {
     return (
-      <main style={mainStyle}>
-        <Display expr={this.props.expr} temp={this.props.temp} handleChange={this.props.handleChange}/>
-        <Plate handleClick={this.props.handleClick} />
-        <Panel handleClick={this.props.handleClick}/>
-        <Keypad handleClick={this.props.handleClick}/>
+      <main>
+        <div class='row'>
+          <div class="column col-md-4">
+            <Whiteboard />
+          </div>
+          <div class="column col-md-4">
+            <Calculator 
+               expr={this.props.expr} 
+               temp={this.props.temp} 
+               handleChange={this.props.handleChange} 
+               handleClick={this.props.handleClick}
+              />
+          </div>
+          <div class="column col-md-4">
+            <Ribbon expr={this.props.expr} save={this.props.save}/>
+          </div>
+        </div>
       </main>
     );
   }
@@ -130,11 +207,12 @@ class Footer extends React.Component {
   }
 }
 
-class Calculator extends React.Component {
+class Simplify extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       expr: '',
+      save: [],
       temp: '0',
       mode: false
     };
@@ -168,8 +246,10 @@ class Calculator extends React.Component {
   }
   handleEval() {
     let result = math.evaluate(this.state.expr);
+    let saves = this.state.save.concat(this.state.expr + ' = ' + result);
     this.setState({
-      expr: result
+      expr: result,
+      save: saves
     });
   }
   toggleMode() {
@@ -182,11 +262,11 @@ class Calculator extends React.Component {
     return (
       <body>
         <Header mode={this.state.mode}/>
-        <Main expr={this.state.expr} temp={this.state.temp} mode={this.state.mode} handleChange={this.handleChange} handleClick={this.handleClick} />
+        <Main expr={this.state.expr} save={this.state.save} temp={this.state.temp} mode={this.state.mode} handleChange={this.handleChange} handleClick={this.handleClick} />
         <Footer mode={this.state.mode}/>
       </body>
     );
   }
 };
 
-ReactDOM.render(<Calculator />, document.getElementById('react'));
+ReactDOM.render(<Simplify />, document.getElementById('react'));

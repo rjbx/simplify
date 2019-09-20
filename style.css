@@ -1,0 +1,39 @@
+@mixin flexbox($h) {
+  display: flex;
+  align-items: center;
+  min-width: 100%;
+  min-height: $h;
+}
+
+body {
+  overflow: hidden;
+  background-color: #F7F7F7;
+  color: #fff;
+  @include flexbox(15vh);
+  
+  main {
+    section {
+      @include flexbox(70vh);
+      border: 1px solid black;
+      background-color: #fff;
+    }
+  }
+  footer {
+    section {
+      @include flexbox(10vh);
+      .column {
+        p {
+          font-size: calc(8px + 1vmin);
+          margin: 0;
+          a {
+            color: #FF5500;
+            font-weight: bold;
+          }
+          a:hover {
+            color: #FFCC55;
+          }
+        }
+      }
+    }
+  }
+}
