@@ -4,12 +4,14 @@ const logoStyle = {margin: '10px', fontFamily: 'Quantico', fontWeight: 'bold', f
 const clearBtnStyle = {width: '165px', height: '24px', backgroundColor: '#0070D7', color: 'white', fontWeight: 'bold', fontSize: '11px', textAlign: 'right'};
 const redBtnStyle = {width: '60px', height: '24px', backgroundColor: '#C73000', color: 'white', fontWeight: 'bold', fontSize: '11px'};
 const blueBtnStyle = {width: '60px', height: '24px', backgroundColor: 'white', color: '#1040A0', fontWeight: 'bold', fontSize: '11px'};
-const Btn = (props) => 
-        <button style={props.style} onClick={props.handleClick} value={props.text} id={props.text}>{props.text}</button>;
+const Btn = (props) => {
+        let v = props.value ? props.value : props.text;
+        return <button style={props.style} onClick={props.handleClick} value={props.text} id={v}>{props.text}</button>;
+}
 const Logo = () => 
-        <h3 style={logoStyle}>TG-108</h3>;
+        <h3 style={logoStyle}>TR-101</h3>;
 const Title = () => 
-        <center><h1><a style={{fontSize: '20px', textDecoration: 'none', color: 'white', fontWeight: 'bold', textShadow: '0px 0px 3px black', fontFamily: 'Quantico'}} href='https://rjbx.github.io/simplify'>simplify</a></h1></center>;
+        <center><h1><a style={{fontSize: '30px', textDecoration: 'none', color: 'white', fontWeight: 'bold', fontFamily: 'Poiret One'}} href='https://rjbx.github.io/simplify'>simplify</a></h1></center>;
 const Attribution = () => 
         <center><h5 style={{fontFamily: 'sans', fontSize: '8px', color: 'grey'}}>Made by rjbx with React and MathJS</h5></center>;
 const Display = (props) => 
@@ -53,9 +55,9 @@ const Keypad = (props) =>
               <Btn handleClick={props.handleClick} text='/' style={redBtnStyle}/>
             </tr>
             <tr>
-              <Btn handleClick={props.handleClick} text='log' style={blueBtnStyle}/>
-              <Btn handleClick={props.handleClick} text='ln' style={blueBtnStyle}/>
-              <Btn handleClick={props.handleClick} text='e^' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='log' value='log10' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='ln' value='log' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='e' style={blueBtnStyle}/>
               <Btn handleClick={props.handleClick} text='sqrt' style={redBtnStyle}/>
             </tr>
             <tr>
@@ -65,9 +67,9 @@ const Keypad = (props) =>
               <Btn handleClick={props.handleClick} text='pi' style={redBtnStyle}/>
             </tr>
             <tr>
-              <Btn handleClick={props.handleClick} text='arcsin' style={blueBtnStyle}/>
-              <Btn handleClick={props.handleClick} text='arccos' style={blueBtnStyle}/>
-              <Btn handleClick={props.handleClick} text='arctan' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='arcsin' value='asin' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='arccos' value='acos' style={blueBtnStyle}/>
+              <Btn handleClick={props.handleClick} text='arctan' value='atan' style={blueBtnStyle}/>
               <Btn handleClick={props.handleClick} text='deg' style={redBtnStyle}/>
             </tr>
           </tbody>
@@ -106,9 +108,9 @@ const Canvas = () =>
           </div>
         </center>
       </section>;
-const Screen = (props) => 
-      <section style={{border: '10px solid #DDD', borderBottom: '25px solid #DDD', borderRadius: '10px', backgroundColor: '#333'}}>
-        <div style={{backgroundColor: '#333', width: '400px', height: '350px', color: '#00AA00', fontFamily: 'Quantico', overflow: 'auto'}}><ul>{
+const Window = (props) => 
+      <section style={{border: '10px solid #DDD', borderBottom: '25px solid silver', borderRadius: '10px', backgroundColor: '#333'}}>
+        <div style={{backgroundColor: '#333', width: '400px', height: '350px', color: '#00C000', fontFamily: 'Quantico', overflow: 'auto'}}><ul>{
             props.save.map((v,i) => {
               return (<li>{v}</li>);
             })
@@ -124,7 +126,7 @@ class Header extends React.Component {
     super(props);
   }
   render() {
-    return (<header><Title /></header>);
+    return (<header style={{padding: '10px', backgroundColor: '#333', borderBottom: '3px solid #777'}}><Title /></header>);
   }
 }
 class Terminal extends React.Component {
@@ -133,7 +135,7 @@ class Terminal extends React.Component {
   } 
   render() {
     return (
-    <Screen save={this.props.save}/>
+    <Window save={this.props.save}/>
     );
   }
 }
@@ -181,7 +183,7 @@ class Main extends React.Component {
   } 
   render() {
     return (
-      <main>
+      <main style={{padding: '20px', backgroundColor: '#fff'}}>
         <div class='row'>
           <div class="column col-md-4">
             <Board />
@@ -207,7 +209,7 @@ class Footer extends React.Component {
     super(props);
   } 
   render() {
-    return (<footer><Attribution /></footer>);
+    return (<footer style={{padding: '10px', backgroundColor: '#333', borderTop: '2px solid #777'}}><Attribution /></footer>);
   }
 }
 
@@ -222,7 +224,7 @@ class Simplify extends React.Component {
     };
     WebFont.load({
       google: {
-       families: ['Quantico:400,700i']
+       families: ['Quantico:400,700i', 'Poiret One']
       }
     })
     this.handleChange = this.handleChange.bind(this);
@@ -241,7 +243,12 @@ class Simplify extends React.Component {
     }
   }
   handleChange(event) {
-    this.handleInput(event.target.value);
+    let value = event.target.value;
+    console.log(value);
+    switch (value.slice(-1)) {
+      case '=': this.handleEval(); break;
+      default: this.handleInput(value);
+    }
   }
   handleInput(value) {
     this.setState({

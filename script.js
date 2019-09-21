@@ -4,12 +4,14 @@ const logoStyle = { margin: '10px', fontFamily: 'Quantico', fontWeight: 'bold', 
 const clearBtnStyle = { width: '165px', height: '24px', backgroundColor: '#0070D7', color: 'white', fontWeight: 'bold', fontSize: '11px', textAlign: 'right' };
 const redBtnStyle = { width: '60px', height: '24px', backgroundColor: '#C73000', color: 'white', fontWeight: 'bold', fontSize: '11px' };
 const blueBtnStyle = { width: '60px', height: '24px', backgroundColor: 'white', color: '#1040A0', fontWeight: 'bold', fontSize: '11px' };
-const Btn = (props) =>
-React.createElement("button", { style: props.style, onClick: props.handleClick, value: props.text, id: props.text }, props.text);
+const Btn = props => {
+  let v = props.value ? props.value : props.text;
+  return React.createElement("button", { style: props.style, onClick: props.handleClick, value: props.text, id: v }, props.text);
+};
 const Logo = () =>
-React.createElement("h3", { style: logoStyle }, "TG-108");
+React.createElement("h3", { style: logoStyle }, "TR-101");
 const Title = () =>
-React.createElement("center", null, React.createElement("h1", null, React.createElement("a", { style: { fontSize: '20px', textDecoration: 'none', color: 'white', fontWeight: 'bold', textShadow: '0px 0px 3px black', fontFamily: 'Quantico' }, href: "https://rjbx.github.io/simplify" }, "simplify")));
+React.createElement("center", null, React.createElement("h1", null, React.createElement("a", { style: { fontSize: '30px', textDecoration: 'none', color: 'white', fontWeight: 'bold', fontFamily: 'Poiret One' }, href: "https://rjbx.github.io/simplify" }, "simplify")));
 const Attribution = () =>
 React.createElement("center", null, React.createElement("h5", { style: { fontFamily: 'sans', fontSize: '8px', color: 'grey' } }, "Made by rjbx with React and MathJS"));
 const Display = (props) =>
@@ -53,9 +55,9 @@ React.createElement(Btn, { handleClick: props.handleClick, text: "^", style: blu
 React.createElement(Btn, { handleClick: props.handleClick, text: "/", style: redBtnStyle })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "log", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "ln", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "e^", style: blueBtnStyle }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "log", value: "log10", style: blueBtnStyle }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "ln", value: "log", style: blueBtnStyle }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "e", style: blueBtnStyle }),
 React.createElement(Btn, { handleClick: props.handleClick, text: "sqrt", style: redBtnStyle })),
 
 React.createElement("tr", null,
@@ -65,9 +67,9 @@ React.createElement(Btn, { handleClick: props.handleClick, text: "tan", style: b
 React.createElement(Btn, { handleClick: props.handleClick, text: "pi", style: redBtnStyle })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "arcsin", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "arccos", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "arctan", style: blueBtnStyle }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "arcsin", value: "asin", style: blueBtnStyle }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "arccos", value: "acos", style: blueBtnStyle }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "arctan", value: "atan", style: blueBtnStyle }),
 React.createElement(Btn, { handleClick: props.handleClick, text: "deg", style: redBtnStyle })))));
 
 
@@ -106,9 +108,9 @@ React.createElement("button", { id: "clear" }, "\u267B"))));
 
 
 
-const Screen = (props) =>
-React.createElement("section", { style: { border: '10px solid #DDD', borderBottom: '25px solid #DDD', borderRadius: '10px', backgroundColor: '#333' } },
-React.createElement("div", { style: { backgroundColor: '#333', width: '400px', height: '350px', color: '#00AA00', fontFamily: 'Quantico', overflow: 'auto' } }, React.createElement("ul", null,
+const Window = (props) =>
+React.createElement("section", { style: { border: '10px solid #DDD', borderBottom: '25px solid silver', borderRadius: '10px', backgroundColor: '#333' } },
+React.createElement("div", { style: { backgroundColor: '#333', width: '400px', height: '350px', color: '#00C000', fontFamily: 'Quantico', overflow: 'auto' } }, React.createElement("ul", null,
 props.save.map((v, i) => {
   return React.createElement("li", null, v);
 }))),
@@ -124,7 +126,7 @@ class Header extends React.Component {
     super(props);
   }
   render() {
-    return React.createElement("header", null, React.createElement(Title, null));
+    return React.createElement("header", { style: { padding: '10px', backgroundColor: '#333', borderBottom: '3px solid #777' } }, React.createElement(Title, null));
   }}
 
 class Terminal extends React.Component {
@@ -133,7 +135,7 @@ class Terminal extends React.Component {
   }
   render() {
     return (
-      React.createElement(Screen, { save: this.props.save }));
+      React.createElement(Window, { save: this.props.save }));
 
   }}
 
@@ -181,7 +183,7 @@ class Main extends React.Component {
   }
   render() {
     return (
-      React.createElement("main", null,
+      React.createElement("main", { style: { padding: '20px', backgroundColor: '#fff' } },
       React.createElement("div", { class: "row" },
       React.createElement("div", { class: "column col-md-4" },
       React.createElement(Board, null)),
@@ -207,7 +209,7 @@ class Footer extends React.Component {
     super(props);
   }
   render() {
-    return React.createElement("footer", null, React.createElement(Attribution, null));
+    return React.createElement("footer", { style: { padding: '10px', backgroundColor: '#333', borderTop: '2px solid #777' } }, React.createElement(Attribution, null));
   }}
 
 
@@ -222,7 +224,7 @@ class Simplify extends React.Component {
 
     WebFont.load({
       google: {
-        families: ['Quantico:400,700i'] } });
+        families: ['Quantico:400,700i', 'Poiret One'] } });
 
 
     this.handleChange = this.handleChange.bind(this);
@@ -241,7 +243,12 @@ class Simplify extends React.Component {
 
   }
   handleChange(event) {
-    this.handleInput(event.target.value);
+    let value = event.target.value;
+    console.log(value);
+    switch (value.slice(-1)) {
+      case '=':this.handleEval();break;
+      default:this.handleInput(value);}
+
   }
   handleInput(value) {
     this.setState({
