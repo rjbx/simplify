@@ -1,146 +1,131 @@
-const inputStyle = { width: '235px', height: '30px', backgroundColor: '#449944', fontFamily: 'Quantico', fontSize: '20px', textAlign: 'right' };
-const calcStyle = { margin: 'auto', paddingTop: '30px', width: '270px', height: '360px', verticalAlign: 'middle', border: '5px groove #0090F7', borderRadius: '0px 0px 15px 15px', backgroundColor: '#0070D7' };
-const logoStyle = { margin: '10px', fontFamily: 'Quantico', fontWeight: 'bold', fontStyle: 'italic', fontSize: '16px', color: 'white', textShadow: '1px 1px #222' };
-const clearBtnStyle = { width: '165px', height: '24px', backgroundColor: '#0070D7', color: 'white', fontWeight: 'bold', fontSize: '11px', textAlign: 'right' };
-const redBtnStyle = { width: '60px', height: '24px', backgroundColor: '#C73000', color: 'white', fontWeight: 'bold', fontSize: '11px' };
-const blueBtnStyle = { width: '60px', height: '24px', backgroundColor: 'white', color: '#1040A0', fontWeight: 'bold', fontSize: '11px' };
-const Btn = props => {
-  let v = props.value ? props.value : props.text;
-  return React.createElement("button", { style: props.style, onClick: props.handleClick, value: props.text, id: v }, props.text);
-};
+const Btn = (props) =>
+React.createElement("button", { class: props.class, onClick: props.handleClick, value: props.text, id: props.value ? props.value : props.text }, props.text);
 const Logo = () =>
-React.createElement("h3", { style: logoStyle }, "TR-101");
+React.createElement("h3", { id: "logo" }, "TR-101");
 const Title = () =>
-React.createElement("center", null, React.createElement("h1", null, React.createElement("a", { style: { fontSize: '30px', textDecoration: 'none', color: 'white', fontWeight: 'bold', fontFamily: 'Poiret One' }, href: "https://rjbx.github.io/simplify" }, "simplify")));
+React.createElement("h1", { id: "title" }, React.createElement("a", { href: "https://rjbx.github.io/simplify" }, "simplify"));
 const Attribution = () =>
-React.createElement("center", null, React.createElement("h5", { style: { fontFamily: 'sans', fontSize: '8px', color: 'grey' } }, "Made by rjbx with React and MathJS"));
-const Display = (props) =>
-React.createElement("section", null,
-React.createElement("table", { style: { margin: 'auto', paddingTop: '20px' }, onClick: props.handleClick },
-React.createElement("input", { style: inputStyle, value: props.expr, placeholder: props.temp, onChange: props.handleChange, onClick: props.handleClick })));
+React.createElement("h5", { id: "attribution" }, "Made by rjbx with React and MathJS");
+const Readout = (props) =>
+React.createElement("section", { id: "readout" },
+React.createElement("table", { onClick: props.handleClick },
+React.createElement("input", { value: props.expr, placeholder: props.temp, onChange: props.handleChange, onClick: props.handleClick })));
 
 
 const Keypad = (props) =>
-React.createElement("section", null,
-React.createElement("table", { style: { margin: 'auto' } },
+React.createElement("section", { id: "keypad" },
+React.createElement("table", null,
 React.createElement("tbody", null,
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "del", style: redBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "(", style: redBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: ")", style: redBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "=", style: redBtnStyle })),
+React.createElement(Btn, { handleClick: props.handleClick, text: "del", class: "red-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "(", class: "red-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: ")", class: "red-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "=", class: "red-button" })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "9", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "8", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "7", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "+", style: redBtnStyle })),
+React.createElement(Btn, { handleClick: props.handleClick, text: "9", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "8", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "7", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "+", class: "red-button" })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "6", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "5", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "4", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "\u2013", style: redBtnStyle })),
+React.createElement(Btn, { handleClick: props.handleClick, text: "6", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "5", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "4", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "\u2013", class: "red-button" })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "3", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "2", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "1", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "*", style: redBtnStyle })),
+React.createElement(Btn, { handleClick: props.handleClick, text: "3", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "2", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "1", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "*", class: "red-button" })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "0", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: ".", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "^", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "/", style: redBtnStyle })),
+React.createElement(Btn, { handleClick: props.handleClick, text: "0", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: ".", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "^", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "/", class: "red-button" })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "log", value: "log10", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "ln", value: "log", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "e", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "sqrt", style: redBtnStyle })),
+React.createElement(Btn, { handleClick: props.handleClick, text: "log", value: "log10", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "ln", value: "log", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "e", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "sqrt", class: "red-button" })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "sin", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "cos", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "tan", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "pi", style: redBtnStyle })),
+React.createElement(Btn, { handleClick: props.handleClick, text: "sin", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "cos", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "tan", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "pi", class: "red-button" })),
 
 React.createElement("tr", null,
-React.createElement(Btn, { handleClick: props.handleClick, text: "arcsin", value: "asin", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "arccos", value: "acos", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "arctan", value: "atan", style: blueBtnStyle }),
-React.createElement(Btn, { handleClick: props.handleClick, text: "deg", style: redBtnStyle })))));
+React.createElement(Btn, { handleClick: props.handleClick, text: "arcsin", value: "asin", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "arccos", value: "acos", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "arctan", value: "atan", class: "white-button" }),
+React.createElement(Btn, { handleClick: props.handleClick, text: "deg", class: "red-button" })))));
 
 
 
 
 const Panel = (props) =>
-React.createElement("section", null,
-React.createElement("button", { value: "panel", style: { backgroundColor: '#0070D7', border: '3px inset #0090FF' } },
-React.createElement("table", { style: { margin: 'auto', border: '1px solid #952', width: '240px', height: '30px', backgroundColor: '#222' } },
+React.createElement("section", { id: "panel" },
+React.createElement("button", { id: "switch" },
+React.createElement("table", null,
 React.createElement("tr", null,
-React.createElement("td", { id: "toggle", style: { border: '1px solid #520' }, onClick: props.handleClick }),
-React.createElement("td", { id: "toggle", style: { border: '1px solid #520' }, onClick: props.handleClick }),
-React.createElement("td", { id: "toggle", style: { border: '1px solid #520' }, onClick: props.handleClick }),
-React.createElement("td", { id: "toggle", style: { border: '1px solid #520' }, onClick: props.handleClick })))));
+React.createElement("td", { class: "toggle", onClick: props.handleClick }),
+React.createElement("td", { class: "toggle", onClick: props.handleClick }),
+React.createElement("td", { class: "toggle", onClick: props.handleClick }),
+React.createElement("td", { class: "toggle", onClick: props.handleClick })))));
 
 
 
 
 const Plate = (props) =>
-React.createElement("section", null,
+React.createElement("section", { id: "plate" },
 React.createElement("table", null,
 React.createElement("tr", null,
 React.createElement("td", null, React.createElement(Logo, null)),
 React.createElement("td", null,
-React.createElement(Btn, { handleClick: props.handleClick, style: clearBtnStyle, text: "AC" })))));
+React.createElement(Btn, { handleClick: props.handleClick, class: "blue-button", text: "AC" })))));
 
 
 
 
 const Canvas = () =>
-React.createElement("section", { style: { backgroundColor: '#333', border: '10px solid #BB9955', borderBottom: '25px solid tan' } },
-React.createElement("canvas", { id: "canvas", width: 400, height: 350, style: { backgroundColor: 'white', width: '400px', height: '350px' } }),
-React.createElement("center", null,
-React.createElement("div", { style: { height: '10px' } },
-React.createElement("button", { id: "clear" }, "\u267B"))));
-
-
-
-const Window = (props) =>
-React.createElement("section", { style: { border: '10px solid #DDD', borderBottom: '25px solid silver', borderRadius: '10px', backgroundColor: '#333' } },
-React.createElement("div", { style: { backgroundColor: '#333', width: '400px', height: '350px', color: '#00C000', fontFamily: 'Quantico', overflow: 'auto' } }, React.createElement("ul", null,
+React.createElement("canvas", { id: "canvas", width: 400, height: 350 });
+const Terminal = (props) =>
+React.createElement("div", { id: "terminal" }, React.createElement("ul", null,
 props.save.map((v, i) => {
   return React.createElement("li", null, v);
-}))),
-
-React.createElement("center", null,
-React.createElement("div", { style: { height: '10px' } },
-React.createElement("button", { id: "clear" }, "\u267B"))));
-
-
+})));
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    return React.createElement("header", { style: { padding: '10px', backgroundColor: '#333', borderBottom: '3px solid #777' } }, React.createElement(Title, null));
+    return React.createElement("header", null, React.createElement("div", { class: "row" }, React.createElement("div", { class: "column" }, React.createElement(Title, null))));
   }}
 
-class Terminal extends React.Component {
+class Monitor extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      React.createElement(Window, { save: this.props.save }));
+      React.createElement("section", { id: "monitor" },
+      React.createElement(Terminal, { save: this.props.save }),
+      React.createElement("center", null,
+      React.createElement("div", { class: "reset" },
+      React.createElement("button", null, "\u267B")))));
+
+
+
 
   }}
 
 
-class Board extends React.Component {
+class Blackboard extends React.Component {
   constructor(props) {
     super(props);
     this.initCanvas = this.initCanvas.bind(this);
@@ -158,7 +143,14 @@ class Board extends React.Component {
   }
   render() {
     return (
-      React.createElement(Canvas, null));
+      React.createElement("section", { id: "blackboard" },
+      React.createElement(Canvas, null),
+      React.createElement("center", null,
+      React.createElement("div", { class: "reset" },
+      React.createElement("button", null, "\u267B")))));
+
+
+
 
   }}
 
@@ -168,8 +160,8 @@ class Calculator extends React.Component {
   }
   render() {
     return (
-      React.createElement("section", { style: calcStyle },
-      React.createElement(Display, { expr: this.props.expr, temp: this.props.temp, handleChange: this.props.handleChange }),
+      React.createElement("section", { id: "calculator" },
+      React.createElement(Readout, { expr: this.props.expr, temp: this.props.temp, handleChange: this.props.handleChange }),
       React.createElement(Plate, { handleClick: this.props.handleClick }),
       React.createElement(Panel, { handleClick: this.props.handleClick }),
       React.createElement(Keypad, { handleClick: this.props.handleClick })));
@@ -183,10 +175,10 @@ class Main extends React.Component {
   }
   render() {
     return (
-      React.createElement("main", { style: { padding: '20px', backgroundColor: '#fff' } },
+      React.createElement("main", null,
       React.createElement("div", { class: "row" },
       React.createElement("div", { class: "column col-md-4" },
-      React.createElement(Board, null)),
+      React.createElement(Blackboard, null)),
 
       React.createElement("div", { class: "column col-md-4" },
       React.createElement(Calculator, {
@@ -197,7 +189,7 @@ class Main extends React.Component {
 
 
       React.createElement("div", { class: "column col-md-4" },
-      React.createElement(Terminal, { expr: this.props.expr, save: this.props.save })))));
+      React.createElement(Monitor, { expr: this.props.expr, save: this.props.save })))));
 
 
 
@@ -209,7 +201,7 @@ class Footer extends React.Component {
     super(props);
   }
   render() {
-    return React.createElement("footer", { style: { padding: '10px', backgroundColor: '#333', borderTop: '2px solid #777' } }, React.createElement(Attribution, null));
+    return React.createElement("footer", null, React.createElement("div", { class: "row" }, React.createElement("div", { class: "column" }, React.createElement(Attribution, null))));
   }}
 
 

@@ -1,0 +1,172 @@
+@mixin flexbox($h) {
+  display: flex;
+  align-items: center;
+  min-width: 100%;
+  min-height: $h;
+}
+
+@mixin button($w: 60px, $bc: #fff, $tc: #fff) {
+  width: $w;
+  height: 24px;
+  background-color: $bc;
+  color: $tc;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+body {
+  border-top: 3px solid #059;
+  background-color: #333;
+  color: #fff;
+  margin: auto;
+  header {
+    padding: 10px;
+    background-color: #333;
+    border-bottom: 3px solid #777;
+    div.row {
+      @include flexbox(15vh);
+      div.column {
+        margin: auto;
+        h1#title {
+          a {
+            font-size: calc(25px + 1vmin);
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-family: Poiret One;
+          }
+        }
+      }
+    }
+  }
+  main {
+    padding: 20px;
+    background-color: #fff !important;
+    div.row {
+      @include flexbox(70vh);
+      section#readout {
+        table {
+          margin: auto;
+          padding-top: 20px;
+          input {
+            width: 235px;
+            height: 30px;
+            background-color: #449944;
+            font-family: Quantico;
+            font-size: 20px;
+            text-align: right;
+          }
+        }
+      }
+      section#plate {
+        table {
+          h3#logo {
+            margin: 10px;
+            font-family: Quantico;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 16px;
+            color: white;
+            text-shadow: 1px 1px #222;
+          }
+          button.blue-button {
+            @include button($w:165px, $bc:#0070D7)
+          }
+        }
+      }
+      section#panel {
+        button {
+          background-color: #0070D7;
+          border: 3px inset #0090FF;
+          table {
+            margin: auto;
+            border: 1px solid #952;
+            width: 240px;
+            height: 30px;
+            background-color: #222;
+            td.toggle {
+              border: 1px solid #520;
+            }
+          }
+        }
+      }
+      section#calculator {
+        margin: auto;
+        padding-top: 30px;
+        width: 270px;
+        height: 360px;
+        vertical-align: middle;
+        border: 5px groove #0090F7; 
+        border-radius: 0px 0px 15px 15px; 
+        background-color: #0070D7;
+        section#keypad {
+          table {
+            margin: auto;
+            button.white-button {
+              @include button($tc:#0070D7);
+            }
+            button.red-button {
+              @include button($bc:#C73000);
+            }
+          }
+        }
+      }
+      section#blackboard {
+        background-color: #333;
+        border: 10px solid #BB9955;
+        border-bottom: 25px solid tan;
+        canvas {
+          width: 400px;
+          height: 350px;
+        }
+        div.reset {
+          height: 10px;
+        }
+      }
+      section#monitor {
+        border: 10px solid #DDD;
+        border-bottom: 25px solid silver; 
+        border-radius: 10px; 
+        background-color: #333;
+        div#terminal {
+          background-color: #333;
+          width: 400px;
+          height: 350px;
+          color: #00C000; 
+          font-family: Quantico; 
+          overflow: auto;
+        }
+        div.reset {
+          height: 10px;
+        }
+      }
+    }
+  }
+  footer {
+    padding: 10px;
+    background-color: #333;
+    border-top: 2px solid #777;
+    div.row {
+      @include flexbox(10vh);
+      div.column {
+        margin: auto;
+        h5#attribution {
+          font-family: sans; 
+          color: grey;
+          font-size: calc(6px + 1vmin);
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  body {
+    main {
+      .row {
+        @include flexbox(40vh);
+        flex-row: row-wrap !important;
+      }
+    }
+  }
+}
