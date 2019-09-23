@@ -1,5 +1,5 @@
 body {
-  border-top: 3px solid #059;
+  border-top: 4px solid #059;
   background-color: #333;
   color: #fff;
   margin: auto;
@@ -7,13 +7,13 @@ body {
 body header {
   padding: 10px;
   background-color: #333;
-  border-bottom: 3px solid #777;
+  border-bottom: 4px solid #777;
 }
 body header div.row {
   display: flex;
   align-items: center;
   min-width: 100%;
-  min-height: 15vh;
+  min-height: 10vh;
 }
 body header div.row div.column {
   margin: auto;
@@ -76,7 +76,7 @@ body main div.row section#panel button table {
   background-color: #222;
 }
 body main div.row section#panel button table td.toggle {
-  border: 1px solid #520;
+  border: 2px solid #520;
 }
 body main div.row section#calculator {
   margin: auto;
@@ -113,11 +113,18 @@ body main div.row section#blackboard {
   border-bottom: 25px solid tan;
 }
 body main div.row section#blackboard canvas {
-  width: 400px;
   height: 350px;
 }
-body main div.row section#blackboard div.reset {
+body main div.row section#blackboard div.reset-wrapper {
   height: 10px;
+}
+body main div.row section#blackboard div.reset-wrapper button {
+  width: 60px;
+  height: 24px;
+  background-color: #fff;
+  color: #222;
+  font-weight: bold;
+  font-size: 14px;
 }
 body main div.row section#monitor {
   border: 10px solid #DDD;
@@ -127,14 +134,21 @@ body main div.row section#monitor {
 }
 body main div.row section#monitor div#terminal {
   background-color: #333;
-  width: 400px;
   height: 350px;
   color: #00C000;
   font-family: Quantico;
   overflow: auto;
 }
-body main div.row section#monitor div.reset {
+body main div.row section#monitor div.reset-wrapper {
   height: 10px;
+}
+body main div.row section#monitor div.reset-wrapper button {
+  width: 60px;
+  height: 24px;
+  background-color: #fff;
+  color: #222;
+  font-weight: bold;
+  font-size: 14px;
 }
 body footer {
   padding: 10px;
@@ -153,7 +167,7 @@ body footer div.row div.column {
 body footer div.row div.column h5#attribution {
   font-family: sans;
   color: grey;
-  font-size: calc(6px + 1vmin);
+  font-size: calc(6px + 0.5vmin);
   margin: 0;
 }
 
@@ -163,6 +177,5 @@ body footer div.row div.column h5#attribution {
     align-items: center;
     min-width: 100%;
     min-height: 40vh;
-    flex-row: row-wrap !important;
   }
 }

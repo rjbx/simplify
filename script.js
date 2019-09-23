@@ -92,7 +92,7 @@ React.createElement(Btn, { handleClick: props.handleClick, class: "blue-button",
 
 
 const Canvas = () =>
-React.createElement("canvas", { id: "canvas", width: 400, height: 350 });
+React.createElement("center", null, React.createElement("canvas", { id: "canvas", width: 215, height: 350 }));
 const Terminal = (props) =>
 React.createElement("div", { id: "terminal" }, React.createElement("ul", null,
 props.save.map((v, i) => {
@@ -116,8 +116,8 @@ class Monitor extends React.Component {
       React.createElement("section", { id: "monitor" },
       React.createElement(Terminal, { save: this.props.save }),
       React.createElement("center", null,
-      React.createElement("div", { class: "reset" },
-      React.createElement("button", null, "\u267B")))));
+      React.createElement("div", { class: "reset-wrapper" },
+      React.createElement("button", { id: "reset-terminal", onClick: this.props.handleReset }, "\u267B")))));
 
 
 
@@ -128,26 +128,14 @@ class Monitor extends React.Component {
 class Blackboard extends React.Component {
   constructor(props) {
     super(props);
-    this.initCanvas = this.initCanvas.bind(this);
-  }
-  componentDidMount() {
-    this.initCanvas();
-  }
-  initCanvas() {
-    let canvas = document.querySelector('canvas');
-    let signaturePad = new SignaturePad(
-    canvas, {
-      backgroundColor: '#333',
-      penColor: '#fff' });
-
   }
   render() {
     return (
       React.createElement("section", { id: "blackboard" },
       React.createElement(Canvas, null),
       React.createElement("center", null,
-      React.createElement("div", { class: "reset" },
-      React.createElement("button", null, "\u267B")))));
+      React.createElement("div", { class: "reset-wrapper" },
+      React.createElement("button", { id: "reset-canvas", onClick: this.props.handleReset }, "\u267B")))));
 
 
 
@@ -178,7 +166,7 @@ class Main extends React.Component {
       React.createElement("main", null,
       React.createElement("div", { class: "row" },
       React.createElement("div", { class: "column col-md-4" },
-      React.createElement(Blackboard, null)),
+      React.createElement(Blackboard, { handleReset: this.props.handleReset })),
 
       React.createElement("div", { class: "column col-md-4" },
       React.createElement(Calculator, {
@@ -189,7 +177,7 @@ class Main extends React.Component {
 
 
       React.createElement("div", { class: "column col-md-4" },
-      React.createElement(Monitor, { expr: this.props.expr, save: this.props.save })))));
+      React.createElement(Monitor, { handleReset: this.props.handleReset, expr: this.props.expr, save: this.props.save })))));
 
 
 
@@ -212,6 +200,7 @@ class Simplify extends React.Component {
       expr: '',
       save: [],
       temp: '0',
+      pad: [],
       mode: false };
 
     WebFont.load({
@@ -221,7 +210,23 @@ class Simplify extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+    this.initCanvas = this.initCanvas.bind(this);
     this.toggleMode = this.toggleMode(this);
+  }
+  componentDidMount() {
+    this.initCanvas();
+  }
+  initCanvas() {
+    let canvas = document.querySelector('canvas');
+    let signaturePad = new SignaturePad(
+    canvas, {
+      backgroundColor: '#333',
+      penColor: '#fff' });
+
+    this.setState({
+      pad: signaturePad });
+
   }
   handleClick(event) {
     let id = event.target.id;
@@ -255,6 +260,23 @@ class Simplify extends React.Component {
       save: saves });
 
   }
+  handleReset(event) {
+    let id = event.target.id;
+    switch (id) {
+      case 'reset-canvas':
+        let freshPad = this.state.pad;
+        freshPad.clear();
+        this.setState({
+          pad: freshPad });
+
+        break;
+      case 'reset-terminal':
+        this.setState({
+          save: [] });
+
+        break;}
+
+  }
   toggleMode() {
     let inverse = !this.state.dark;
     this.setState({
@@ -265,7 +287,7 @@ class Simplify extends React.Component {
     return (
       React.createElement("body", null,
       React.createElement(Header, { mode: this.state.mode }),
-      React.createElement(Main, { expr: this.state.expr, save: this.state.save, temp: this.state.temp, mode: this.state.mode, handleChange: this.handleChange, handleClick: this.handleClick }),
+      React.createElement(Main, { expr: this.state.expr, save: this.state.save, temp: this.state.temp, mode: this.state.mode, handleChange: this.handleChange, handleClick: this.handleClick, handleReset: this.handleReset }),
       React.createElement(Footer, { mode: this.state.mode })));
 
 

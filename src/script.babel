@@ -92,7 +92,7 @@ const Plate = (props) =>
         </table>
       </section>;
 const Canvas = () => 
-        <canvas id='canvas' width={400} height={350}></canvas>;
+        <center><canvas id='canvas' width={215} height={350}></canvas></center>;
 const Terminal = (props) => 
         <div id='terminal'><ul>{
             props.save.map((v,i) => {
@@ -116,8 +116,8 @@ class Monitor extends React.Component {
     <section id='monitor'>
         <Terminal save={this.props.save}/>
         <center>
-          <div class='reset'>
-            <button>♻</button>
+          <div class='reset-wrapper'>
+            <button id='reset-terminal' onClick={this.props.handleReset}>♻</button>
           </div>
         </center>
       </section>
@@ -128,26 +128,14 @@ class Monitor extends React.Component {
 class Blackboard extends React.Component {
   constructor(props) {
     super(props);
-    this.initCanvas = this.initCanvas.bind(this);
-  }
-  componentDidMount() {
-    this.initCanvas();
-  }
-  initCanvas() { 
-    let canvas = document.querySelector('canvas');
-    let signaturePad = new SignaturePad(
-      canvas, {
-        backgroundColor: '#333',
-        penColor: '#fff'
-      });
   }
   render() { 
     return (
       <section id='blackboard'>
         <Canvas />
         <center>
-          <div class='reset'>
-            <button>♻</button>
+          <div class='reset-wrapper'>
+            <button id='reset-canvas' onClick={this.props.handleReset}>♻</button>
           </div>
         </center>
       </section>
@@ -178,7 +166,7 @@ class Main extends React.Component {
       <main>
         <div class='row'>
           <div class="column col-md-4">
-            <Blackboard />
+            <Blackboard handleReset={this.props.handleReset}/>
           </div>
           <div class="column col-md-4">
             <Calculator 
@@ -189,7 +177,7 @@ class Main extends React.Component {
               />
           </div>
           <div class="column col-md-4">
-            <Monitor expr={this.props.expr} save={this.props.save}/>
+            <Monitor handleReset={this.props.handleReset} expr={this.props.expr} save={this.props.save}/>
           </div>
         </div>
       </main>
@@ -212,16 +200,33 @@ class Simplify extends React.Component {
       expr: '',
       save: [],
       temp: '0',
+      pad: [],
       mode: false
     };
     WebFont.load({
       google: {
        families: ['Quantico:400,700i', 'Poiret One']
       }
-    })
+    });
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+    this.initCanvas = this.initCanvas.bind(this);
     this.toggleMode = this.toggleMode(this);
+  }
+  componentDidMount() {
+    this.initCanvas();
+  }
+  initCanvas() { 
+    let canvas = document.querySelector('canvas');
+    let signaturePad = new SignaturePad(
+      canvas, {
+        backgroundColor: '#333',
+        penColor: '#fff'
+      });
+    this.setState({
+      pad: signaturePad
+    });
   }
   handleClick(event) {
     let id = event.target.id;
@@ -255,6 +260,23 @@ class Simplify extends React.Component {
       save: saves
     });
   }
+  handleReset(event) {
+    let id = event.target.id;
+    switch(id) {
+      case 'reset-canvas':
+        let freshPad = this.state.pad;
+        freshPad.clear();
+        this.setState({
+          pad: freshPad
+        });
+        break;
+      case 'reset-terminal': 
+        this.setState({
+          save: []
+        });
+        break;
+    }
+  }
   toggleMode() {
     let inverse = !this.state.dark;
     this.setState({
@@ -265,7 +287,7 @@ class Simplify extends React.Component {
     return (
       <body>
         <Header mode={this.state.mode}/>
-        <Main expr={this.state.expr} save={this.state.save} temp={this.state.temp} mode={this.state.mode} handleChange={this.handleChange} handleClick={this.handleClick} />
+        <Main expr={this.state.expr} save={this.state.save} temp={this.state.temp} mode={this.state.mode} handleChange={this.handleChange} handleClick={this.handleClick} handleReset={this.handleReset}/>
         <Footer mode={this.state.mode}/>
       </body>
     );

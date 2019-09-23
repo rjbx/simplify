@@ -5,26 +5,26 @@
   min-height: $h;
 }
 
-@mixin button($w: 60px, $bc: #fff, $tc: #fff) {
+@mixin button($w: 60px, $bc: #fff, $tc: #fff, $fs: 11px) {
   width: $w;
   height: 24px;
   background-color: $bc;
   color: $tc;
   font-weight: bold;
-  font-size: 11px;
+  font-size: $fs;
 }
 
 body {
-  border-top: 3px solid #059;
+  border-top: 4px solid #059;
   background-color: #333;
   color: #fff;
   margin: auto;
   header {
     padding: 10px;
     background-color: #333;
-    border-bottom: 3px solid #777;
+    border-bottom: 4px solid #777;
     div.row {
-      @include flexbox(15vh);
+      @include flexbox(10vh);
       div.column {
         margin: auto;
         h1#title {
@@ -85,7 +85,7 @@ body {
             height: 30px;
             background-color: #222;
             td.toggle {
-              border: 1px solid #520;
+              border: 2px solid #520;
             }
           }
         }
@@ -116,11 +116,13 @@ body {
         border: 10px solid #BB9955;
         border-bottom: 25px solid tan;
         canvas {
-          width: 400px;
           height: 350px;
         }
-        div.reset {
+        div.reset-wrapper {
           height: 10px;
+          button {
+            @include button($tc: #222, $fs: 14px);
+          }
         }
       }
       section#monitor {
@@ -130,14 +132,16 @@ body {
         background-color: #333;
         div#terminal {
           background-color: #333;
-          width: 400px;
           height: 350px;
           color: #00C000; 
           font-family: Quantico; 
           overflow: auto;
         }
-        div.reset {
+        div.reset-wrapper {
           height: 10px;
+          button {
+            @include button($tc: #222, $fs: 14px)
+          }
         }
       }
     }
@@ -153,7 +157,7 @@ body {
         h5#attribution {
           font-family: sans; 
           color: grey;
-          font-size: calc(6px + 1vmin);
+          font-size: calc(6px + 0.5vmin);
           margin: 0;
         }
       }
@@ -165,7 +169,6 @@ body {
     main {
       .row {
         @include flexbox(40vh);
-        flex-row: row-wrap !important;
       }
     }
   }
