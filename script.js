@@ -5,7 +5,7 @@ React.createElement("h3", { id: "logo" }, "TR-101");
 const Title = () =>
 React.createElement("h1", { id: "title" }, React.createElement("a", { href: "https://rjbx.github.io/simplify" }, "simplify"));
 const Attribution = () =>
-React.createElement("h5", { id: "attribution" }, "Made by rjbx with React and MathJS");
+React.createElement("h5", { id: "attribution" }, "Made by ", React.createElement("a", { target: "_blank", href: "https://rjbx.github.io/simplify" }, "rjbx"), " with ", React.createElement("a", { target: "_blank", href: "https://reactjs.org" }, "ReactJS"), " and ", React.createElement("a", { target: "_blank", href: "https://mathjs.org" }, "MathJS"));
 const Readout = (props) =>
 React.createElement("section", { id: "readout" },
 React.createElement("table", { onClick: props.handleClick },
@@ -72,10 +72,10 @@ React.createElement("section", { id: "panel" },
 React.createElement("button", { id: "switch" },
 React.createElement("table", null,
 React.createElement("tr", null,
-React.createElement("td", { class: "toggle", onClick: props.handleClick }),
-React.createElement("td", { class: "toggle", onClick: props.handleClick }),
-React.createElement("td", { class: "toggle", onClick: props.handleClick }),
-React.createElement("td", { class: "toggle", onClick: props.handleClick })))));
+React.createElement("td", { class: "toggle", onClick: props.toggleMode }),
+React.createElement("td", { class: "toggle", onClick: props.toggleMode }),
+React.createElement("td", { class: "toggle", onClick: props.toggleMode }),
+React.createElement("td", { class: "toggle", onClick: props.toggleMode })))));
 
 
 
@@ -151,7 +151,7 @@ class Calculator extends React.Component {
       React.createElement("section", { id: "calculator" },
       React.createElement(Readout, { expr: this.props.expr, temp: this.props.temp, handleChange: this.props.handleChange }),
       React.createElement(Plate, { handleClick: this.props.handleClick }),
-      React.createElement(Panel, { handleClick: this.props.handleClick }),
+      React.createElement(Panel, { toggleMode: this.props.toggleMode }),
       React.createElement(Keypad, { handleClick: this.props.handleClick })));
 
 
@@ -163,7 +163,7 @@ class Main extends React.Component {
   }
   render() {
     return (
-      React.createElement("main", null,
+      React.createElement("main", { style: { backgroundColor: this.props.mode ? '#333' : '#fff' } },
       React.createElement("div", { class: "row" },
       React.createElement("div", { class: "column col-md-4" },
       React.createElement(Blackboard, { handleReset: this.props.handleReset })),
@@ -173,7 +173,8 @@ class Main extends React.Component {
         expr: this.props.expr,
         temp: this.props.temp,
         handleChange: this.props.handleChange,
-        handleClick: this.props.handleClick })),
+        handleClick: this.props.handleClick,
+        toggleMode: this.props.toggleMode })),
 
 
       React.createElement("div", { class: "column col-md-4" },
@@ -212,7 +213,7 @@ class Simplify extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.initCanvas = this.initCanvas.bind(this);
-    this.toggleMode = this.toggleMode(this);
+    this.toggleMode = this.toggleMode.bind(this);
   }
   componentDidMount() {
     this.initCanvas();
@@ -233,7 +234,7 @@ class Simplify extends React.Component {
     console.log(event.target.id);
     switch (id) {
       case 'AC':this.handleInput('');break;
-      case 'toggle':this.toggleMode();break;
+      case '#':this.toggleMode();break;
       case '=':this.handleEval();break;
       case 'del':this.handleInput(this.state.expr.slice(0, -1));break;
       default:this.handleInput(this.state.expr + id);}
@@ -278,7 +279,8 @@ class Simplify extends React.Component {
 
   }
   toggleMode() {
-    let inverse = !this.state.dark;
+    console.log(this.state.mode);
+    let inverse = !this.state.mode;
     this.setState({
       mode: inverse });
 
@@ -287,7 +289,7 @@ class Simplify extends React.Component {
     return (
       React.createElement("body", null,
       React.createElement(Header, { mode: this.state.mode }),
-      React.createElement(Main, { expr: this.state.expr, save: this.state.save, temp: this.state.temp, mode: this.state.mode, handleChange: this.handleChange, handleClick: this.handleClick, handleReset: this.handleReset }),
+      React.createElement(Main, { expr: this.state.expr, save: this.state.save, temp: this.state.temp, mode: this.state.mode, handleChange: this.handleChange, handleClick: this.handleClick, handleReset: this.handleReset, toggleMode: this.toggleMode }),
       React.createElement(Footer, { mode: this.state.mode })));
 
 

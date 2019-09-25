@@ -41,7 +41,6 @@ body {
   }
   main {
     padding: 20px;
-    background-color: #fff !important;
     div.row {
       @include flexbox(70vh);
       section#readout {

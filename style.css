@@ -27,7 +27,6 @@ body header div.row div.column h1#title a {
 }
 body main {
   padding: 20px;
-  background-color: #fff !important;
 }
 body main div.row {
   display: flex;

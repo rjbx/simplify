@@ -5,7 +5,7 @@ const Logo = () =>
 const Title = () => 
         <h1 id='title'><a href='https://rjbx.github.io/simplify'>simplify</a></h1>;
 const Attribution = () => 
-        <h5 id='attribution'>Made by rjbx with React and MathJS</h5>;
+<h5 id='attribution'>Made by <a target='_blank' href='https://rjbx.github.io/simplify'>rjbx</a> with <a target='_blank' href='https://reactjs.org'>ReactJS</a> and <a target='_blank' href='https://mathjs.org'>MathJS</a></h5>;
 const Readout = (props) => 
       <section id='readout'>
         <table onClick={props.handleClick}>
@@ -72,10 +72,10 @@ const Panel = (props) =>
         <button id='switch'>
           <table>
             <tr>
-              <td class='toggle' onClick={props.handleClick}></td>
-              <td class='toggle' onClick={props.handleClick}></td>
-              <td class='toggle' onClick={props.handleClick}></td>
-              <td class='toggle' onClick={props.handleClick}></td>
+              <td class='toggle' onClick={props.toggleMode}></td>
+              <td class='toggle' onClick={props.toggleMode}></td>
+              <td class='toggle' onClick={props.toggleMode}></td>
+              <td class='toggle' onClick={props.toggleMode}></td>
             </tr>
           </table>
         </button>
@@ -151,7 +151,7 @@ class Calculator extends React.Component {
       <section id='calculator'>
         <Readout expr={this.props.expr} temp={this.props.temp} handleChange={this.props.handleChange} />
         <Plate handleClick={this.props.handleClick} />
-        <Panel handleClick={this.props.handleClick} />
+        <Panel toggleMode={this.props.toggleMode} />
         <Keypad handleClick={this.props.handleClick} />
        </section>
     );
@@ -163,7 +163,7 @@ class Main extends React.Component {
   } 
   render() {
     return (
-      <main>
+      <main style={{backgroundColor: this.props.mode ? '#333' : '#fff' }}>
         <div class='row'>
           <div class="column col-md-4">
             <Blackboard handleReset={this.props.handleReset}/>
@@ -174,6 +174,7 @@ class Main extends React.Component {
                temp={this.props.temp} 
                handleChange={this.props.handleChange} 
                handleClick={this.props.handleClick}
+               toggleMode={this.props.toggleMode}
               />
           </div>
           <div class="column col-md-4">
@@ -212,7 +213,7 @@ class Simplify extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.initCanvas = this.initCanvas.bind(this);
-    this.toggleMode = this.toggleMode(this);
+    this.toggleMode = this.toggleMode.bind(this);
   }
   componentDidMount() {
     this.initCanvas();
@@ -233,7 +234,7 @@ class Simplify extends React.Component {
     console.log(event.target.id);
     switch (id) {
       case 'AC': this.handleInput(''); break;
-      case 'toggle': this.toggleMode(); break;
+      case '#': this.toggleMode(); break;
       case '=': this.handleEval(); break;
       case 'del': this.handleInput(this.state.expr.slice(0,-1)); break;
       default: this.handleInput(this.state.expr + id);
@@ -278,7 +279,8 @@ class Simplify extends React.Component {
     }
   }
   toggleMode() {
-    let inverse = !this.state.dark;
+    console.log(this.state.mode);
+    let inverse = !this.state.mode;
     this.setState({
       mode: inverse
     });
@@ -287,7 +289,7 @@ class Simplify extends React.Component {
     return (
       <body>
         <Header mode={this.state.mode}/>
-        <Main expr={this.state.expr} save={this.state.save} temp={this.state.temp} mode={this.state.mode} handleChange={this.handleChange} handleClick={this.handleClick} handleReset={this.handleReset}/>
+        <Main expr={this.state.expr} save={this.state.save} temp={this.state.temp} mode={this.state.mode} handleChange={this.handleChange} handleClick={this.handleClick} handleReset={this.handleReset} toggleMode={this.toggleMode}/>
         <Footer mode={this.state.mode}/>
       </body>
     );
