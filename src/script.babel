@@ -5,7 +5,7 @@ const Logo = () =>
 const Title = () => 
         <h1 id='title'><a href='https://rjbx.github.io/simplify'>simplify</a></h1>;
 const Attribution = () => 
-<h5 id='attribution'>Made by <a target='_blank' href='https://rjbx.github.io/simplify'>rjbx</a> with <a target='_blank' href='https://reactjs.org'>ReactJS</a> and <a target='_blank' href='https://mathjs.org'>MathJS</a></h5>;
+<h5 id='attribution'>Made by <a target='_blank' href='https://github.com/rjbx/simplify'>rjbx</a> with <a target='_blank' href='https://reactjs.org'>ReactJS</a> and <a target='_blank' href='https://mathjs.org'>MathJS</a></h5>;
 const Readout = (props) => 
       <section id='readout'>
         <table onClick={props.handleClick}>
@@ -243,10 +243,8 @@ class Simplify extends React.Component {
   handleChange(event) {
     let value = event.target.value;
     console.log(value);
-    switch (value.slice(-1)) {
-      case '=': this.handleEval(); break;
-      default: this.handleInput(value);
-    }
+    if (value.includes('=')) this.handleEval();
+    else this.handleInput(value);
   }
   handleInput(value) {
     this.setState({

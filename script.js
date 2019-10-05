@@ -5,7 +5,7 @@ React.createElement("h3", { id: "logo" }, "TR-101");
 const Title = () =>
 React.createElement("h1", { id: "title" }, React.createElement("a", { href: "https://rjbx.github.io/simplify" }, "simplify"));
 const Attribution = () =>
-React.createElement("h5", { id: "attribution" }, "Made by ", React.createElement("a", { target: "_blank", href: "https://rjbx.github.io/simplify" }, "rjbx"), " with ", React.createElement("a", { target: "_blank", href: "https://reactjs.org" }, "ReactJS"), " and ", React.createElement("a", { target: "_blank", href: "https://mathjs.org" }, "MathJS"));
+React.createElement("h5", { id: "attribution" }, "Made by ", React.createElement("a", { target: "_blank", href: "https://github.com/rjbx/simplify" }, "rjbx"), " with ", React.createElement("a", { target: "_blank", href: "https://reactjs.org" }, "ReactJS"), " and ", React.createElement("a", { target: "_blank", href: "https://mathjs.org" }, "MathJS"));
 const Readout = (props) =>
 React.createElement("section", { id: "readout" },
 React.createElement("table", { onClick: props.handleClick },
@@ -243,10 +243,8 @@ class Simplify extends React.Component {
   handleChange(event) {
     let value = event.target.value;
     console.log(value);
-    switch (value.slice(-1)) {
-      case '=':this.handleEval();break;
-      default:this.handleInput(value);}
-
+    if (value.includes('=')) this.handleEval();else
+    this.handleInput(value);
   }
   handleInput(value) {
     this.setState({

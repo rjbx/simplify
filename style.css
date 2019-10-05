@@ -4,6 +4,9 @@ body {
   color: #fff;
   margin: auto;
 }
+body a:hover {
+  color: #ff3700;
+}
 body header {
   padding: 10px;
   background-color: #333;
