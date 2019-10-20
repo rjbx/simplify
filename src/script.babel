@@ -117,7 +117,7 @@ class Monitor extends React.Component {
         <Terminal save={this.props.save}/>
         <center>
           <div class='reset-wrapper'>
-            <button id='reset-terminal' onClick={this.props.handleReset}>♻</button>
+            <button id='reset-terminal' onClick={this.props.handleReset}>🗑</button>
           </div>
         </center>
       </section>
@@ -135,7 +135,7 @@ class Blackboard extends React.Component {
         <Canvas />
         <center>
           <div class='reset-wrapper'>
-            <button id='reset-canvas' onClick={this.props.handleReset}>♻</button>
+            <button id='reset-canvas' onClick={this.props.handleReset}>🗑</button>
           </div>
         </center>
       </section>

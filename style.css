@@ -3,6 +3,8 @@ body {
   background-color: #333;
   color: #fff;
   margin: auto;
+  overflow-x: hidden;
+  height: 100% !important;
 }
 body a:hover {
   color: #ff3700;
@@ -22,10 +24,10 @@ body header div.row div.column {
   margin: auto;
 }
 body header div.row div.column h1#title a {
+  letter-spacing: 0.1em;
   font-size: calc(25px + 1vmin);
   text-decoration: none;
   color: white;
-  font-weight: bold;
   font-family: Poiret One;
 }
 body main {
@@ -127,6 +129,7 @@ body main div.row section#blackboard div.reset-wrapper button {
   color: #222;
   font-weight: bold;
   font-size: 14px;
+  line-height: 1em;
 }
 body main div.row section#monitor {
   border: 10px solid #DDD;
@@ -136,10 +139,19 @@ body main div.row section#monitor {
 }
 body main div.row section#monitor div#terminal {
   background-color: #333;
+  padding: 10px;
   height: 350px;
   color: #00C000;
   font-family: Quantico;
   overflow: auto;
+}
+body main div.row section#monitor div#terminal ul {
+  list-style: none;
+  padding: 0;
+}
+body main div.row section#monitor div#terminal ul li:before {
+  content: '>';
+  margin: 0 1em;
 }
 body main div.row section#monitor div.reset-wrapper {
   height: 10px;
@@ -151,6 +163,7 @@ body main div.row section#monitor div.reset-wrapper button {
   color: #222;
   font-weight: bold;
   font-size: 14px;
+  line-height: 1em;
 }
 body footer {
   padding: 10px;
@@ -167,9 +180,9 @@ body footer div.row div.column {
   margin: auto;
 }
 body footer div.row div.column h5#attribution {
-  font-family: sans;
+  font-family: sans-serif;
   color: grey;
-  font-size: calc(6px + 0.5vmin);
+  font-size: calc(8px + 0.5vmin);
   margin: 0;
 }
 

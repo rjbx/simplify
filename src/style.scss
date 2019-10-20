@@ -4,7 +4,6 @@
   min-width: 100%;
   min-height: $h;
 }
-
 @mixin button($w: 60px, $bc: #fff, $tc: #fff, $fs: 11px) {
   width: $w;
   height: 24px;
@@ -19,6 +18,8 @@ body {
   background-color: #333;
   color: #fff;
   margin: auto;
+  overflow-x: hidden;
+  height: 100% !important;
   a:hover {
     color: #ff3700;
   }
@@ -32,10 +33,10 @@ body {
         margin: auto;
         h1#title {
           a {
+            letter-spacing: 0.1em;
             font-size: calc(25px + 1vmin);
             text-decoration: none;
             color: white;
-            font-weight: bold;
             font-family: Poiret One;
           }
         }
@@ -124,6 +125,7 @@ body {
           height: 10px;
           button {
             @include button($tc: #222, $fs: 14px);
+            line-height: 1em;
           }
         }
       }
@@ -134,15 +136,25 @@ body {
         background-color: #333;
         div#terminal {
           background-color: #333;
+          padding: 10px;
           height: 350px;
           color: #00C000; 
           font-family: Quantico; 
           overflow: auto;
+          ul {
+            list-style: none;
+            padding: 0;
+            li:before {
+              content: '>';
+              margin: 0 1em;
+            }
+          }
         }
         div.reset-wrapper {
           height: 10px;
           button {
-            @include button($tc: #222, $fs: 14px)
+            @include button($tc: #222, $fs: 14px);
+              line-height: 1em;
           }
         }
       }
@@ -157,9 +169,9 @@ body {
       div.column {
         margin: auto;
         h5#attribution {
-          font-family: sans; 
+          font-family: sans-serif; 
           color: grey;
-          font-size: calc(6px + 0.5vmin);
+          font-size: calc(8px + 0.5vmin);
           margin: 0;
         }
       }

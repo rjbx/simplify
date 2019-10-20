@@ -117,7 +117,7 @@ class Monitor extends React.Component {
       React.createElement(Terminal, { save: this.props.save }),
       React.createElement("center", null,
       React.createElement("div", { class: "reset-wrapper" },
-      React.createElement("button", { id: "reset-terminal", onClick: this.props.handleReset }, "\u267B")))));
+      React.createElement("button", { id: "reset-terminal", onClick: this.props.handleReset }, "\uD83D\uDDD1")))));
 
 
 
@@ -135,7 +135,7 @@ class Blackboard extends React.Component {
       React.createElement(Canvas, null),
       React.createElement("center", null,
       React.createElement("div", { class: "reset-wrapper" },
-      React.createElement("button", { id: "reset-canvas", onClick: this.props.handleReset }, "\u267B")))));
+      React.createElement("button", { id: "reset-canvas", onClick: this.props.handleReset }, "\uD83D\uDDD1")))));
 
 
 
